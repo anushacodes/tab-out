@@ -5,6 +5,29 @@
    ============================================================ */
 
 :root {
+  --ink: #f4eae1;
+  --paper: #181614;
+  --warm-gray: #2e2824;
+  --muted: #8b8076;
+  --accent-amber: #e6854b;
+  --accent-sage: #7ba184;
+  --accent-slate: #7a8b9c;
+  --accent-rose: #d16b6b;
+  --status-active: #5ca16c;
+  --status-cooling: #d1a03f;
+  --status-abandoned: #d16b6b;
+  --card-bg: #211e1b;
+  --shadow: rgba(0, 0, 0, 0.35);
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Base paper noise texture opacity for dark mode default */
+body::before {
+  opacity: 0.4;
+}
+
+/* Light Mode Overrides */
+html[data-theme="light"] {
   --ink: #1a1613;
   --paper: #f8f5f0;
   --warm-gray: #e8e2da;
@@ -20,14 +43,57 @@
   --shadow: rgba(26, 22, 19, 0.06);
 }
 
+html[data-theme="light"] body::before {
+  opacity: 1.0;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   background: var(--paper);
   color: var(--ink);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--warm-gray);
+  color: var(--ink);
+  transform: scale(1.05);
+}
+
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Sun/Moon visibility depending on theme (Default is Dark Mode) */
+html[data-theme="light"] .theme-toggle-btn .sun-icon {
+  display: none;
+}
+html[data-theme="light"] .theme-toggle-btn .moon-icon {
+  display: block;
+}
+html:not([data-theme="light"]) .theme-toggle-btn .sun-icon {
+  display: block;
+}
+html:not([data-theme="light"]) .theme-toggle-btn .moon-icon {
+  display: none;
 }
 
 /* Subtle paper texture */
@@ -65,9 +131,9 @@ header {
 }
 
 .header-left h1 {
-  font-family: 'Newsreader', serif;
-  font-weight: 300;
-  font-size: 28px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 26px;
   letter-spacing: -0.5px;
   color: var(--ink);
   margin-bottom: 4px;
@@ -76,7 +142,7 @@ header {
 .header-left .date {
   font-size: 13px;
   color: var(--muted);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
@@ -127,7 +193,7 @@ header {
 }
 
 .tab-cleanup-btn {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 600;
   padding: 8px 20px;
@@ -194,10 +260,9 @@ header {
 }
 
 .section-header h2 {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: 18px;
-  font-style: italic;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -476,9 +541,9 @@ header {
 }
 
 .mission-page-count {
-  font-size: 20px;
-  font-family: 'Newsreader', serif;
-  font-weight: 300;
+  font-size: 18px;
+  font-family: var(--font-family);
+  font-weight: 600;
   color: var(--ink);
   line-height: 1;
 }
@@ -499,7 +564,7 @@ header {
 
 .action-btn {
   font-size: 11px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-weight: 500;
   padding: 5px 14px;
   border-radius: 4px;
@@ -572,7 +637,7 @@ header {
   transform: translateX(-50%) translateY(80px);
   background: var(--ink);
   color: var(--paper);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   font-weight: 500;
   padding: 12px 24px;
@@ -618,9 +683,9 @@ footer {
 }
 
 .stat-num {
-  font-family: 'Newsreader', serif;
+  font-family: var(--font-family);
   font-size: 28px;
-  font-weight: 300;
+  font-weight: 700;
   color: var(--ink);
   line-height: 1;
   transition: all 0.3s;
@@ -640,7 +705,7 @@ footer {
 }
 
 .refresh-btn {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 11px;
   font-weight: 500;
   color: var(--accent-amber);
@@ -749,10 +814,9 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 .empty-title {
-  font-family: 'Newsreader', serif;
-  font-size: 20px;
-  font-weight: 400;
-  font-style: italic;
+  font-family: var(--font-family);
+  font-size: 18px;
+  font-weight: 600;
   color: var(--ink);
   letter-spacing: -0.3px;
 }
@@ -833,7 +897,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 
 /* "Update now" button — small, filled, sage green */
 .update-banner-btn {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 500;
   color: #fff;
@@ -1059,7 +1123,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 .archive-toggle {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 500;
   color: var(--muted);
@@ -1100,7 +1164,7 @@ footer { animation: fadeUp 0.5s ease 0.65s both; }
 }
 
 .archive-search {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   width: 100%;
   padding: 8px 12px;

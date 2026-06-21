@@ -91,3 +91,25 @@ chrome.tabs.onUpdated.addListener(() => {
 
 // Run once immediately when the service worker first loads
 updateBadge();
+
+// ─── Open Dashboard on Click ──────────────────────────────────────────────────
+
+// Open or focus the dashboard when the extension toolbar icon is clicked
+chrome.action.onClicked.addListener(async () => {
+  try {
+    const extensionUrl = chrome.runtime.getURL('index.html');
+    const tabs = await chrome.tabs.query({});
+    const existingTab = tabs.find(t => t.url === extensionUrl);
+
+    if (existingTab) {
+      // If the dashboard is already open, focus it and its containing window
+      await chrome.tabs.update(existingTab.id, { active: true });
+      await chrome.windows.update(existingTab.windowId, { focused: true });
+    } else {
+      // Otherwise, open it in a new tab
+      await chrome.tabs.create({ url: extensionUrl });
+    }
+  } catch (err) {
+    console.error('[Tab Out] Failed to open/focus dashboard:', err);
+  }
+});
